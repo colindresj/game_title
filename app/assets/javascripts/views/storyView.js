@@ -6,12 +6,13 @@ App.Views.Story = Backbone.View.extend({
   template: JST['story'],
   initialize: function(){
     this.$el.append(this.template());
-    this.listenTo(this.collection, 'change', this.startGame);
+    this.listenTo(this.collection, 'change', this.addOne);
   },
   startGame: function(){
     this.addOne();
   },
   addOne: function(){
-    var chapter = new App.Views.Chapter();
+    var chapterView = new App.Views.Chapter();
+    this.collection.add(chapterView.model);
   }
 });

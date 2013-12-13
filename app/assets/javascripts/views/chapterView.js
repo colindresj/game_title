@@ -1,25 +1,21 @@
 App.Views.Chapter = Backbone.View.extend({
-  el: '#story',
-  model: new App.Models.Chapter(),
   template: JST['chapter'],
+  riddle: 'riddle',
   events: {
     'keyup .riddle': 'validateGuess'
   },
-  completed: false,
   initialize: function(){
+    $('#story').append(this.$el);
     this.$el.append(this.template({}));
-    this.listenTo(this.model, 'change', this.completeChapter);
+    this.$el.find('.riddle').focus();
+    this.model = new App.Models.Chapter();
   },
   validateGuess: function(e){
    $input = $(e.currentTarget);
-    this.model.completed = true;
-   var answer = this.model.get('riddle');
+   var answer = this.riddle;
    if ($input.val() === answer) {
-    var solution = '<span>' + answer + '</span>';
-    this.$el.find('.riddle').replaceWith(solution);
+    this.$el.find('.riddle').replaceWith('<span>' + answer + '</span>');
+    this.model.set({completed: true});
    }
-  },
-  completeChapter: function(){
-    alert('complete');
   }
 });
