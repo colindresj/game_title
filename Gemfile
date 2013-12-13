@@ -35,6 +35,28 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+# development and testing gems
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'capybara'
+  gem 'capybara-webkit'
+  # gem 'launchy'
+  # gem 'selenium-webdriver'
+  gem 'jasmine'
+  gem 'shoulda-matchers'
+  gem 'simplecov', :require => false
+  gem 'guard-rails'
+  gem 'guard-rspec', :require => false
+  gem 'terminal-notifier-guard', :require => false
+  gem 'guard-livereload'
+  gem 'pry-rails'
+  gem 'pry-debugger'
+  gem 'pry-stack_explorer'
+  gem 'quiet_assets' # Turns off the Rails asset pipeline log
+  gem 'meta_request' # Supporting gem for Rails Panel
+  gem 'awesome_print'
+end
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 

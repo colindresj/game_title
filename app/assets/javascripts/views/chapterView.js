@@ -5,6 +5,7 @@ App.Views.Chapter = Backbone.View.extend({
   initialize: function(){
     $('#story').append(this.$el);
 
+    this.$el.attr('id', 'chapter-' + this.model.id);
     this.template = JST['chapter' + this.model.id];
 
     // parse the chapter in order to properly remove the answers and replace
