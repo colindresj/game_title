@@ -6,7 +6,5 @@ App.Router = Backbone.Router.extend({
     Backbone.history.start();
     App.story = new App.Views.Story({ collection: new App.Collections.Chapters() });
   },
-  index: function(){
-    console.log('index');
-  }
+  index: function(){}
 });

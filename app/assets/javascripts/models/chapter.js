@@ -1,11 +1,26 @@
 App.Models.Chapter = Backbone.Model.extend({
   defaults: {
-    completed: false
+    completed: false,
+    riddles: []
   },
   riddleParse: function(){
     var content = this.get('text');
-    var regEx = new RegExp('/{(.*?)}/');
-    var parsedContent = content.replace(/{(.*?)}/, '<input type="text" class="riddle">');
-    this.set({text: parsedContent});
+
+    // create an array of riddles by find words wrapped in curly braces
+    var riddles = content.match(/{(.*?)}/g);
+
+    // loop through the array of riddles, replace the text with inputs
+    // and also return an array of clean strings as the riddle answers
+    this.set({riddles:
+      _.map(riddles, function(currentRiddle){
+        var regEx = /{([^}]+)}/g;
+        content = content.replace(/{(.*?)}/, '<input type="text" class="riddle">');
+        return regEx.exec(currentRiddle)[1];
+      }, this)
+    });
+
+    // set the text for the chapter equal to the string with inputs in place of
+    // answers (words originally wraped in {})
+    this.set({text: content});
   }
 });

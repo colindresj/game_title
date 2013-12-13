@@ -1,0 +1,12 @@
+-
+  id: 1
+  title: chapter 1
+  text: chapter 1 text {riddle}, {riddle2}, {word}
+-
+  id: 2
+  title: chapter 2
+  text: chapter 2 text {riddle}
+-
+  id: 3
+  title: chapter 3
+  text: any word that {you} want

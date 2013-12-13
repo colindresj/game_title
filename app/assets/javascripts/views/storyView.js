@@ -14,7 +14,13 @@ App.Views.Story = Backbone.View.extend({
   },
   addOne: function(){
     this.modelCounter++;
+
+    // grab a new chapter model based of an id set in the yml file
+    // use the above counter to grab chapters sequentially
     var currentChapter = this.collection.get(this.modelCounter);
+
+    // if there are still chapters left, create a new view and pass in the
+    // chapter as that views model and a template matched by id
     if (currentChapter){
       var chapterView = new App.Views.Chapter({ model: currentChapter });
     } else {
