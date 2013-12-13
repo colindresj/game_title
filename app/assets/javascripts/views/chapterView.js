@@ -1,10 +1,11 @@
 App.Views.Chapter = Backbone.View.extend({
-  template: JST['chapter'],
   events: {
     'keyup .riddle': 'validateGuess'
   },
   initialize: function(){
     $('#story').append(this.$el);
+
+    this.template = JST['chapter' + this.model.id];
 
     // parse the chapter in order to properly remove the answers and replace
     // them with blank inputs, as well as set the models answers in a riddles array
