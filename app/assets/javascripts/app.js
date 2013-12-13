@@ -1,5 +1,6 @@
 // Backbone Namespacing
 window.App = {
+  Templates   : {},
   Models      : {},
   Collections : {},
   Views       : {}

@@ -4,7 +4,7 @@ App.Router = Backbone.Router.extend({
   },
   initialize: function(){
     Backbone.history.start();
-    App.story = new App.Views.Story();
+    App.story = new App.Views.Story({ collection: new App.Collections.Chapters() });
   },
   index: function(){
     console.log('index');
