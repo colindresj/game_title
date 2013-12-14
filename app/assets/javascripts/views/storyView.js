@@ -23,6 +23,11 @@ App.Views.Story = Backbone.View.extend({
     // chapter as that views model and a template matched by id
     if (currentChapter){
       var chapterView = new App.Views.Chapter({ model: currentChapter });
+
+      // save story progress to local storage for later continuation
+      this.collection.saveProgress({
+        'currentChapter': this.modelCounter
+      });
     } else {
       this.finishGame();
     }

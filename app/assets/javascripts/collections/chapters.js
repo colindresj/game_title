@@ -3,5 +3,8 @@ App.Collections.Chapters = Backbone.Collection.extend({
   model: App.Models.Chapter,
   initialize: function(){
     this.fetch();
+  },
+  saveProgress: function(progress){
+    localStorage.setItem('storyProgress', JSON.stringify(progress));
   }
 });
