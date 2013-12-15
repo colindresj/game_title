@@ -16,8 +16,10 @@ App.Views.Story = Backbone.View.extend({
       this.modelCounter = 1;
     }
     this.listenTo(this.collection, 'change:completed', this.addOne);
+    this.listenTo(this.collection, 'pointsBump', this.pointsBump);
   },
   startGame: function(){
+    this.points = 0;
     this.addOne();
   },
   addOne: function(){
@@ -47,6 +49,11 @@ App.Views.Story = Backbone.View.extend({
       i++;
     }
     this.addOne();
+  },
+  pointsBump: function(){
+    this.points += 50;
+    debugger
+    $('#points span').html(this.points);
   },
   finishGame: function(){
     alert('Game over.');
