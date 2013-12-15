@@ -31,7 +31,12 @@ App.Views.Chapter = Backbone.View.extend({
           $answerSpan.fadeIn('fast');
         });
         answers.remove(answer);
-        this.$el.find('.riddle:first').focus();
+
+        // wait for fadeOut to finish before focusing on the next input
+        var _this = this;
+        setTimeout(function() {
+          _this.$el.find('.riddle:first').focus();
+        }, 400);
        }
 
       // stop looping if there are no more anwers left to guess and set the chapter to completed
