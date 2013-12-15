@@ -27,7 +27,7 @@ App.Views.Chapter = Backbone.View.extend({
     _.each(answers, function(answer){
       if ($input.val() === answer) {
         $input.replaceWith('<span>' + answer + '</span>');
-        answers.splice(answer, 1);
+        answers.remove(answer);
         this.$el.find('.riddle:first').focus();
        }
 

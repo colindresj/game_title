@@ -24,3 +24,17 @@ App.Models.Chapter = Backbone.Model.extend({
     this.set({text: content});
   }
 });
+
+// Adding this remove function to Array because it makes it easier
+// to remove solved riddles from a particular chapter's bank
+Array.prototype.remove = function(el, all) {
+  for (var i = this.length - 1; i >= 0; i--) {
+    if (this[i] === el) {
+      this.splice(i, 1);
+      if(!all) {
+        break;
+      }
+    }
+  }
+  return this;
+};
