@@ -15,8 +15,12 @@ App.Views.Story = Backbone.View.extend({
       this.$el.append(this.template());
       this.modelCounter = 1;
     }
+
+    // add a new chapter whenever one is completed
     this.listenTo(this.collection, 'change:completed', this.addOne);
-    this.listenTo(this.collection, 'pointsBump', this.pointsBump);
+
+    // add points to score when an answer is solved
+    this.listenTo(this.collection, 'riddleSolved', this.pointsBump);
   },
   startGame: function(){
     this.points = 0;
@@ -51,8 +55,8 @@ App.Views.Story = Backbone.View.extend({
     this.addOne();
   },
   pointsBump: function(){
+    // have to persist points or this won't work (NaaN)
     this.points += 50;
-    debugger
     $('#points span').html(this.points);
   },
   finishGame: function(){

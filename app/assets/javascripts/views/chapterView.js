@@ -32,7 +32,9 @@ App.Views.Chapter = Backbone.View.extend({
           $answerSpan.fadeIn('fast');
         });
         answers.remove(answer);
-        this.model.trigger('pointsBump');
+
+        // trigger a custom event to increase the points
+        this.model.trigger('riddleSolved');
 
         // wait for fadeOut to finish before focusing on the next input
         var _this = this;
