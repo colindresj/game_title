@@ -5,19 +5,27 @@ App.Views.Story = Backbone.View.extend({
   },
   template: JST['story'],
   initialize: function(){
-    this.$el.append(this.template());
-    this.modelCounter = 0;
+
+    // checking local storage for a current chapter and if so setting the counter to it
+    var currentChapter = this.collection.getProgress();
+    if (currentChapter) {
+      this.modelCounter = parseInt(currentChapter, 10);
+      this.listenTo(this.collection, 'sync', this.addAllCompleted);
+    } else {
+      this.$el.append(this.template());
+      this.modelCounter = 1;
+    }
     this.listenTo(this.collection, 'change:completed', this.addOne);
   },
   startGame: function(){
     this.addOne();
   },
   addOne: function(){
-    this.modelCounter++;
 
     // grab a new chapter model based of an id set in the yml file
-    // use the above counter to grab chapters sequentially
+    // use the counter to grab chapters sequentially
     var currentChapter = this.collection.get(this.modelCounter);
+    this.modelCounter++;
 
     // if there are still chapters left, create a new view and pass in the
     // chapter as that views model and a template matched by id
@@ -25,12 +33,20 @@ App.Views.Story = Backbone.View.extend({
       var chapterView = new App.Views.Chapter({ model: currentChapter });
 
       // save story progress to local storage for later continuation
-      this.collection.saveProgress({
-        'currentChapter': this.modelCounter
-      });
+      this.collection.saveProgress(currentChapter.id);
     } else {
       this.finishGame();
     }
+  },
+  addAllCompleted: function(){
+    i = 1;
+    while (i < this.modelCounter) {
+      var currentChapter = this.collection.get(i);
+      var chapterView = new App.Views.Chapter({ model: currentChapter });
+      chapterView.solveAll();
+      i++;
+    }
+    this.addOne();
   },
   finishGame: function(){
     alert('Game over.');

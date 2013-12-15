@@ -17,7 +17,7 @@ App.Views.Chapter = Backbone.View.extend({
     this.$el.find('.riddle:first').focus();
   },
   validateGuess: function(e){
-    $input = $(e.currentTarget);
+    var $input = $(e.currentTarget);
 
     // loop through the answers and check if current input val matches any
     // of those answers. If so, replace with a span and remove it from the answers,
@@ -35,6 +35,13 @@ App.Views.Chapter = Backbone.View.extend({
       if (answers.length === 0) {
         this.model.set({completed: true});
       }
+    }, this);
+  },
+  solveAll: function(){
+    var answers = this.model.get('riddles');
+    _.each(answers, function(answer){
+      var $input = this.$el.find('.riddle:first');
+      $input.replaceWith('<span>' + answer + '</span>');
     }, this);
   }
 });
