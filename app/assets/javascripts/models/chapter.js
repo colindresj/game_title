@@ -14,7 +14,7 @@ App.Models.Chapter = Backbone.Model.extend({
     this.set({riddles:
       _.map(riddles, function(currentRiddle){
         var regEx = /{([^}]+)}/g;
-        content = content.replace(/{(.*?)}/, '<input type="text" class="riddle">');
+        content = content.replace(/{(.*?)}/, '<input type="text" class="riddle" size="' + (currentRiddle.length - 2) + '">');
         return regEx.exec(currentRiddle)[1];
       }, this)
     });
