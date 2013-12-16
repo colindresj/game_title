@@ -12,14 +12,16 @@ App.Views.Story = Backbone.View.extend({
     if (currentChapter) {
       this.$el.append(this.template({
         points: this.collection.points,
-        newGame: false
+        newGame: false,
+        hintsLeft: this.collection.getHints() === "0" ? false : true
       }));
       this.modelCounter = parseInt(currentChapter, 10);
       this.listenTo(this.collection, 'sync', this.addAllCompleted);
     } else {
       this.$el.append(this.template({
         points: this.collection.points,
-        newGame: true
+        newGame: true,
+        hintsLeft: false
       }));
       this.modelCounter = 1;
     }
@@ -76,6 +78,11 @@ App.Views.Story = Backbone.View.extend({
     // trigger an event on the current chapter model to give the answer and drop the points
     var currentChapter = this.collection.get(currentChapterId).trigger('giveAnswer');
     this.pointsDrop();
+    this.collection.lowerHints();
+
+    // check if there are any hints remaining, and if not remove the hint button
+    var hints = parseInt(this.collection.getHints(), 10);
+    if (hints === 0) $('#answer').remove();
   },
   finishGame: function(){
     alert('Game over.');

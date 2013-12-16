@@ -3,8 +3,9 @@ App.Collections.Chapters = Backbone.Collection.extend({
   model: App.Models.Chapter,
   initialize: function(){
 
-    // grab the current user points or set it to zero if no saved points
+    // grab the current user points and hints left or set to 0 and 3 if not saved
     this.points = parseInt(this.getPoints(), 10) || 0;
+    this.hints = parseInt(this.getHints(), 10) || 3;
     this.fetch();
   },
   saveProgress: function(currentChapter){
@@ -28,5 +29,12 @@ App.Collections.Chapters = Backbone.Collection.extend({
   },
   getPoints: function(){
     return localStorage.getItem('currentPoints');
+  },
+  lowerHints: function(){
+    this.hints--;
+    localStorage.setItem('hintsLeft', this.hints);
+  },
+  getHints: function(){
+    return localStorage.getItem('hintsLeft');
   }
 });
