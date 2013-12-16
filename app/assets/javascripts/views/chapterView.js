@@ -19,7 +19,7 @@ App.Views.Chapter = Backbone.View.extend({
     // listen for when the model is asked to give it's answer away
     this.listenTo(this.model, 'giveAnswer', this.giveAnswer);
   },
-  fillAnswer: function($input, answers, answer){
+  fillAnswer: function($input, answers, answer, givePoints){
     $input.fadeOut('fast', function(){
       var $answerSpan = $('<span class="solved pink-raw-highlight">' + answer + '</span>');
       $(this).replaceWith($answerSpan);
@@ -27,8 +27,10 @@ App.Views.Chapter = Backbone.View.extend({
     });
     answers.remove(answer);
 
-    // trigger a custom event to increase the points
-    this.model.trigger('riddleSolved');
+    // trigger a custom event to increase the points if needed
+    if (givePoints) {
+      this.model.trigger('riddleSolved');
+    }
 
     // wait for fadeOut to finish before focusing on the next input
     var _this = this;
@@ -46,7 +48,7 @@ App.Views.Chapter = Backbone.View.extend({
     var answers = this.model.get('riddles');
     _.each(answers, function(answer){
       if ($input.val() === answer) {
-        this.fillAnswer($input, answers, answer);
+        this.fillAnswer($input, answers, answer, true);
       }
     }, this);
     this.completeChapter();
@@ -62,11 +64,12 @@ App.Views.Chapter = Backbone.View.extend({
     var $input = $('.riddle:first');
     var answers = this.model.get('riddles');
     var givenAnswer = this.model.get('riddles')[0];
-    this.fillAnswer($input, answers, givenAnswer);
+    this.fillAnswer($input, answers, givenAnswer, false);
     this.completeChapter();
   },
   completeChapter: function(){
     var answers = this.model.get('riddles');
+
     // set the chapter to completed if no more answers
     if (answers.length === 0) {
       this.model.set({completed: true});

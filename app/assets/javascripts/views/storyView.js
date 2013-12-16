@@ -65,13 +65,17 @@ App.Views.Story = Backbone.View.extend({
   pointsBump: function(){
     $('#points span').html(this.collection.pointsBump());
   },
+  pointsDrop: function(){
+    $('#points span').html(this.collection.pointsDrop());
+  },
   giveAnswer: function(){
 
     // get the current chapterId from storage or assign it as 1 because nothing has been saved yet
     var currentChapterId = parseInt(this.collection.getProgress(), 10) || 1;
 
-    // trigger an event on the current chapter model
+    // trigger an event on the current chapter model to give the answer and drop the points
     var currentChapter = this.collection.get(currentChapterId).trigger('giveAnswer');
+    this.pointsDrop();
   },
   finishGame: function(){
     alert('Game over.');

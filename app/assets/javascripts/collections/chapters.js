@@ -18,6 +18,11 @@ App.Collections.Chapters = Backbone.Collection.extend({
     this.savePoints();
     return this.points;
   },
+  pointsDrop: function(){
+    this.points -= 50;
+    this.savePoints();
+    return this.points;
+  },
   savePoints: function(){
     localStorage.setItem('currentPoints', this.points);
   },
