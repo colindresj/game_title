@@ -1,7 +1,8 @@
 App.Views.Story = Backbone.View.extend({
   el: '#story',
   events: {
-    'click #start': 'startGame'
+    'click #start': 'startGame',
+    'click #answer': 'giveAnswer'
   },
   template: JST['story'],
   initialize: function(){
@@ -31,7 +32,7 @@ App.Views.Story = Backbone.View.extend({
   },
   startGame: function(){
     this.addOne();
-    $('#start').remove();
+    $('#start').replaceWith('<button id="answer">Answer</button>');
   },
   addOne: function(){
 
@@ -63,6 +64,14 @@ App.Views.Story = Backbone.View.extend({
   },
   pointsBump: function(){
     $('#points span').html(this.collection.pointsBump());
+  },
+  giveAnswer: function(){
+
+    // get the current chapterId from storage or assign it as 1 because nothing has been saved yet
+    var currentChapterId = parseInt(this.collection.getProgress(), 10) || 1;
+
+    // trigger an event on the current chapter model
+    var currentChapter = this.collection.get(currentChapterId).trigger('giveAnswer');
   },
   finishGame: function(){
     alert('Game over.');
