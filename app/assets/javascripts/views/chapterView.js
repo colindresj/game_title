@@ -16,8 +16,9 @@ App.Views.Chapter = Backbone.View.extend({
     // focus on the first riddle input for ease of use
     this.$el.find('.riddle:first').focus();
 
-    // listen for when the model is asked to give it's answer away
+    // listen for when the model is asked to give it's answer away or for a hint
     this.listenTo(this.model, 'giveAnswer', this.giveAnswer);
+    this.listenTo(this.model, 'giveHint', this.giveHint);
   },
   fillAnswer: function($input, answers, answer, givePoints){
     $input.fadeOut('fast', function(){
@@ -30,6 +31,9 @@ App.Views.Chapter = Backbone.View.extend({
     // trigger a custom event to increase the points if needed
     if (givePoints) this.model.trigger('riddleSolved');
 
+    // reset the hintCounter for a new word
+    this.model.set({'hintCounter': 0});
+
     // wait for fadeOut to finish before focusing on the next input
     var _this = this;
     setTimeout(function() {
@@ -37,8 +41,15 @@ App.Views.Chapter = Backbone.View.extend({
     }, 400);
   },
   validateGuess: function(e){
-    var $input = $(e.currentTarget);
+
+    // grab the input either from the event target or the first input
     var solved = this.model.get('solved');
+    var $input;
+    if (e) {
+      $input = $(e.currentTarget);
+    } else {
+      $input = $('.riddle:first');
+    }
 
     // loop through the answers and check if current input val matches any
     // of those answers. If so, replace with a span and remove it from the answers,
@@ -62,6 +73,25 @@ App.Views.Chapter = Backbone.View.extend({
     var givenAnswer = this.model.get('riddles')[0];
     this.fillAnswer($input, answers, givenAnswer, false);
     this.completeChapter();
+  },
+  giveHint: function(){
+    var $input = $('.riddle:first');
+    var answers = this.model.get('riddles');
+    var hintIndex = this.model.get('hintCounter');
+
+    // give the first non-given letter as the hint
+    var givenHint = this.model.get('riddles')[0][hintIndex];
+
+    // increase the hint index
+    this.model.set({'hintCounter': ++hintIndex});
+
+    // add the hint to the input field
+    var originalValue = $input.val();
+    $input.val(originalValue + givenHint);
+
+    // run it through the validator in case it's finished
+    this.validateGuess();
+    $input.focus();
   },
   completeChapter: function(){
     var answers = this.model.get('riddles');

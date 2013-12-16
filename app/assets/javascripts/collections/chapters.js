@@ -5,7 +5,7 @@ App.Collections.Chapters = Backbone.Collection.extend({
 
     // grab the current user points and hints left or set to 0 and 3 if not saved
     this.points = parseInt(this.getPoints(), 10) || 0;
-    this.hints = parseInt(this.getHints(), 10) || 3;
+    this.hints = parseInt(this.getHints(), 10) || 4;
     this.fetch();
   },
   saveProgress: function(currentChapter){
@@ -19,8 +19,8 @@ App.Collections.Chapters = Backbone.Collection.extend({
     this.savePoints();
     return this.points;
   },
-  pointsDrop: function(){
-    this.points -= 50;
+  pointsDrop: function(amount){
+    this.points -= amount;
     this.savePoints();
     return this.points;
   },

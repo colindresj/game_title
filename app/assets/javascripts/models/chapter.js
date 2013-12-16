@@ -1,7 +1,8 @@
 App.Models.Chapter = Backbone.Model.extend({
   defaults: {
     completed: false,
-    riddles: []
+    riddles: [],
+    hintCounter: 0
   },
   riddleParse: function(){
     var content = this.get('text');

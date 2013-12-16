@@ -2,6 +2,7 @@ App.Views.Story = Backbone.View.extend({
   el: '#story',
   events: {
     'click #start': 'startGame',
+    'click #hint': 'giveHint',
     'click #answer': 'giveAnswer'
   },
   template: JST['story'],
@@ -34,7 +35,7 @@ App.Views.Story = Backbone.View.extend({
   },
   startGame: function(){
     this.addOne();
-    $('#start').replaceWith('<button id="answer">Answer</button>');
+    $('#start').replaceWith('<button id="hint">Hint</button><button id="answer">Answer</button>');
   },
   addOne: function(){
 
@@ -67,8 +68,18 @@ App.Views.Story = Backbone.View.extend({
   pointsBump: function(){
     $('#points span').html(this.collection.pointsBump());
   },
-  pointsDrop: function(){
-    $('#points span').html(this.collection.pointsDrop());
+  pointsDrop: function(amount){
+    $('#points span').html(this.collection.pointsDrop(amount));
+  },
+  giveHint: function(){
+    // get the current chapterId from storage or assign it as 1 because nothing has been saved yet
+    var currentChapterId = parseInt(this.collection.getProgress(), 10) || 1;
+
+    // trigger an event on the current chapter model to give the answer and drop the points
+    var currentChapter = this.collection.get(currentChapterId).trigger('giveHint');
+    this.pointsDrop(50);
+    this.lowerHints();
+
   },
   giveAnswer: function(){
 
@@ -77,14 +88,20 @@ App.Views.Story = Backbone.View.extend({
 
     // trigger an event on the current chapter model to give the answer and drop the points
     var currentChapter = this.collection.get(currentChapterId).trigger('giveAnswer');
-    this.pointsDrop();
+    this.pointsDrop(150);
+    this.lowerHints();
+  },
+  lowerHints: function(){
     this.collection.lowerHints();
 
     // check if there are any hints remaining, and if not remove the hint button
     var hints = parseInt(this.collection.getHints(), 10);
-    if (hints === 0) $('#answer').remove();
+    if (hints === 0) {
+      $('#answer').remove();
+      $('#hint').remove();
+    }
   },
   finishGame: function(){
-    alert('Game over.');
+    alert('That\'s all for now, folks.');
   }
 });
