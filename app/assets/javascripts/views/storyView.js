@@ -31,6 +31,7 @@ App.Views.Story = Backbone.View.extend({
   },
   startGame: function(){
     this.addOne();
+    $('#start').remove();
   },
   addOne: function(){
 
