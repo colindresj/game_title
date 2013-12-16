@@ -28,9 +28,7 @@ App.Views.Chapter = Backbone.View.extend({
     answers.remove(answer);
 
     // trigger a custom event to increase the points if needed
-    if (givePoints) {
-      this.model.trigger('riddleSolved');
-    }
+    if (givePoints) this.model.trigger('riddleSolved');
 
     // wait for fadeOut to finish before focusing on the next input
     var _this = this;
@@ -47,9 +45,7 @@ App.Views.Chapter = Backbone.View.extend({
     // then focus on the next question
     var answers = this.model.get('riddles');
     _.each(answers, function(answer){
-      if ($input.val() === answer) {
-        this.fillAnswer($input, answers, answer, true);
-      }
+      if ($input.val() === answer)this.fillAnswer($input, answers, answer, true);
     }, this);
     this.completeChapter();
   },
