@@ -30,16 +30,27 @@ describe "The Game"do
       expect(page).to_not have_css(".solved")
     end
 
+    it "should start at 0 points" do
+      expect(page).to have_content("Points: 0")
+    end
+
   end
 
   context "when solving a riddle", :js => true do
 
-    it "replaces the input with a span in the answer" do
+    before(:each) do
       click_button("Start the Game")
-      answer = "nervous"
-      page.first(".riddle").set(answer)
+      @answer = "nervous"
+      page.first(".riddle").set(@answer)
+    end
+
+    it "replaces the input with a span in the answer" do
       expect(page).to have_css("span")
-      expect(page).to have_content(answer)
+      expect(page).to have_content(@answer)
+    end
+
+    it "should increase the points count by 50" do
+      expect(page).to have_content("Points: 50")
     end
 
   end
