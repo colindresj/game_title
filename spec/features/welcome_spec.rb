@@ -1,10 +1,10 @@
 require "spec_helper"
 
-describe "The Game", :js => true do
+describe "The Game"do
 
   before(:each) { visit "/" }
 
-  it "has a button to start the game" do
+  it "has a button to start the game", :js => true do
     expect(page).to have_button("Start the Game")
   end
 
@@ -13,7 +13,7 @@ describe "The Game", :js => true do
     expect(page).to have_content("Story App")
   end
 
-  context "when clicking on the start game button" do
+  context "when clicking on the start game button", :js => true do
 
     before(:each) do
       visit "/"
@@ -25,14 +25,14 @@ describe "The Game", :js => true do
       expect(page).to have_css("#chapter-1")
     end
 
-    it "has a bunch of inputs(riddles) and no spans(solved)" do
+    it "has a bunch of inputs(riddles) and no .solved" do
       expect(page).to have_css('input[type="text"]')
-      expect(page).to_not have_css("span")
+      expect(page).to_not have_css(".solved")
     end
 
   end
 
-  context "when solving a riddle" do
+  context "when solving a riddle", :js => true do
 
     it "replaces the input with a span in the answer" do
       click_button("Start the Game")
@@ -44,7 +44,7 @@ describe "The Game", :js => true do
 
   end
 
-  context "when solving all the riddles in a chapter" do
+  context "when solving all the riddles in a chapter", :js => true do
 
     before(:each) do
       visit "/"
@@ -60,9 +60,6 @@ describe "The Game", :js => true do
       expect(page).to have_css("#chapter-2")
     end
 
-    it "has an equivilant number of spans for riddles solved" do
-      page.all("span").count.should eq(4)
-    end
   end
 
 end

@@ -27,7 +27,7 @@ App.Views.Chapter = Backbone.View.extend({
     _.each(answers, function(answer){
       if ($input.val() === answer) {
         $input.fadeOut('fast', function(){
-          var $answerSpan = $('<span class="pink-raw-highlight">' + answer + '</span>');
+          var $answerSpan = $('<span class="solved pink-raw-highlight">' + answer + '</span>');
           $(this).replaceWith($answerSpan);
           $answerSpan.fadeIn('fast');
         });
@@ -53,7 +53,7 @@ App.Views.Chapter = Backbone.View.extend({
     var answers =  this.model.get('riddles');
     _.each(answers, function(answer){
       var $input = this.$el.find('.riddle:first');
-      $input.replaceWith('<span class="pink-raw-highlight">' + answer + '</span>');
+      $input.replaceWith('<span class="solved pink-raw-highlight">' + answer + '</span>');
     }, this);
   }
 });
