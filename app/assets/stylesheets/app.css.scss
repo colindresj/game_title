@@ -6,6 +6,7 @@
 @import "utilities/font-face";
 @import "utilities/prefixer";
 @import "utilities/reset";
+@import "utilities/animations";
 @import "utilities/transitions";
 @import "utilities/variables";
 
@@ -22,6 +23,7 @@
 // Atoms
 // ----------------
 @import "atoms/highlight";
+@import "atoms/fades";
 @import "atoms/spacing";
 
 // ----------------

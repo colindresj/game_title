@@ -4,6 +4,7 @@ input {
   padding: 0;
   border: 0;
   &:focus {
+    height: 1.15em;
     outline: none;
     text-align: center;
   }

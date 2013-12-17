@@ -11,7 +11,8 @@ App.Views.Chapter = Backbone.View.extend({
     // parse the chapter in order to properly remove the answers and replace
     // them with blank inputs, as well as set the models answers in a riddles array
     this.model.riddleParse();
-    this.$el.append(this.template(this.model.toJSON()));
+    this.$el.hide();
+    this.$el.append(this.template(this.model.toJSON())).addClass('delay-fade').show();
 
     // focus on the first riddle input for ease of use
     this.$el.find('.riddle:first').focus();
