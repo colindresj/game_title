@@ -1,6 +1,7 @@
 .minimal {
   font-family: "Avenir", serif;
   font-size: .9em;
+  line-height: 1.65em;
   color: $minimal-main;
   @extend %p-top-25-px;
   h1, h2, h3, h4, h5, h6 {
@@ -15,13 +16,16 @@
   }
   input {
     border-bottom: 1px solid lighten($minimal-main, 18%);
+    background-color: darken($minimal-main, 16%);
     &:focus {
+      background-color: white;
       color: $minimal-main;
     }
   }
   button {
     color: $minimal-main;
     background-color: $minimal-second;
+    @extend %m-right-5-px;
     @include transition (background-color .25s ease-in-out);
     &:hover {
       background-color: darken($minimal-second, 10%);
@@ -30,6 +34,7 @@
   }
   header {
     background-color: white;
+    @include prefixer(opacity, .9, webkit moz ms o spec);
   }
 
 }

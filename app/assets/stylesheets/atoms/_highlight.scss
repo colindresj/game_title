@@ -1,10 +1,13 @@
-$colors: (red, pink, blue, orange, green);
-@each $color in $colors{
+$colors: (pink #ffc0cb) (green #b7e693 );
+@each $color-combo in $colors{
+    $color: nth($color-combo, 1);
+    $hex: nth($color-combo, 2);
+
   .#{$color}-raw-highlight {
     position: relative;
     &:before {
       content: '';
-      background: $color;
+      background-color: $hex;
       position: absolute;
       top: 50%;
       left: 0;

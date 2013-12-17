@@ -21,15 +21,24 @@ App.Views.Chapter = Backbone.View.extend({
     this.listenTo(this.model, 'giveHint', this.giveHint);
   },
   fillAnswer: function($input, answers, answer, givePoints){
-    $input.fadeOut('fast', function(){
-      var $answerSpan = $('<span class="solved pink-raw-highlight">' + answer + '</span>');
-      $(this).replaceWith($answerSpan);
-      $answerSpan.fadeIn('fast');
-    });
     answers.remove(answer);
 
     // trigger a custom event to increase the points if needed
-    if (givePoints) this.model.trigger('riddleSolved');
+    // and paint the span green for correct, pink for with hint
+    if (givePoints) {
+      $input.fadeOut('fast', function(){
+        var $answerSpan = $('<span class="solved green-raw-highlight">' + answer + '</span>');
+        $(this).replaceWith($answerSpan);
+        $answerSpan.fadeIn('fast');
+      });
+      this.model.trigger('riddleSolved');
+    } else {
+      $input.fadeOut('fast', function(){
+        var $answerSpan = $('<span class="solved pink-raw-highlight">' + answer + '</span>');
+        $(this).replaceWith($answerSpan);
+        $answerSpan.fadeIn('fast');
+      });
+    }
 
     // reset the hintCounter for a new word
     this.model.set({'hintCounter': 0});
