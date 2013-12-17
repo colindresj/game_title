@@ -1,14 +1,3 @@
-// Place all the styles related to the welcome controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
-.header {
-  width: 100%;
-  // position: fixed;
-  background: pink;
-  z-index: 2;
-}
-
 $colors: (red, pink, blue, orange, green);
 @each $color in $colors{
   .#{$color}-raw-highlight {

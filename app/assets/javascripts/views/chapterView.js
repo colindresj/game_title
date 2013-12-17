@@ -16,7 +16,7 @@ App.Views.Chapter = Backbone.View.extend({
     // focus on the first riddle input for ease of use
     this.$el.find('.riddle:first').focus();
 
-    // listen for when the model is asked to give it's answer away or for a hint
+    // listen for when the model is asked to give its answer away or for a hint
     this.listenTo(this.model, 'giveAnswer', this.giveAnswer);
     this.listenTo(this.model, 'giveHint', this.giveHint);
   },
