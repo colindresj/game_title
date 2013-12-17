@@ -1,0 +1,11 @@
+@font-face {
+  font: {
+     family: 'Avenir';
+     weight: 800;
+     style: 'normal';
+  }
+  src: asset-url('avenir.eot', font);
+  src: asset-url('avenir.eot', font) format('embedded-opentype'),
+       asset-url('avenir.woff', font) format('woff'),
+       asset-url('avenir.ttf', font) format('truetype')
+}

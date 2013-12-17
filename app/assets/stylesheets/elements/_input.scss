@@ -1,0 +1,10 @@
+input {
+  line-height: .5em;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  &:focus {
+    outline: none;
+    text-align: center;
+  }
+}

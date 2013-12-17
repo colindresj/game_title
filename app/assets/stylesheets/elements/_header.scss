@@ -1,6 +1,19 @@
 header {
   width: 100%;
-  // position: fixed;
-  background: pink;
+  position: fixed;
   z-index: 2;
+  top: 0;
+  left: 0;
+  @extend %p-top-10-px;
+  @extend %p-bottom-10-px;
+  @extend %p-left-8-em;
+  @extend %p-right-8-em;
+  @extend %cf;
+  div {
+    float: left;
+    width: 50%;
+    &:nth-of-type(2) {
+      text-align: right;
+    }
+  }
 }

@@ -97,8 +97,8 @@ App.Views.Story = Backbone.View.extend({
     // check if there are any hints remaining, and if not remove the hint button
     var hints = parseInt(this.collection.getHints(), 10);
     if (hints === 0) {
-      $('#answer').remove();
-      $('#hint').remove();
+      $('#answer').hide();
+      $('#hint').hide();
     }
   },
   finishGame: function(){

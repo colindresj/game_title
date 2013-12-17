@@ -1,10 +1,13 @@
 <header>
+  <div class="buttons">
+    {{#if newGame}}
+    <button id="start">Start the Game</button>
+    {{/if}}
+    {{#if hintsLeft}}
+    <button id="hint">Hint</button>
+    <button id="answer">Answer</button>
+    {{/if}}
+    &nbsp;
+  </div>
   <div id="points">Points: <span>{{points}}</span></div>
-  {{#if newGame}}
-  <button id="start">Start the Game</button>
-  {{/if}}
-  {{#if hintsLeft}}
-  <button id="hint">Hint</button>
-  <button id="answer">Answer</button>
-  {{/if}}
 </header>

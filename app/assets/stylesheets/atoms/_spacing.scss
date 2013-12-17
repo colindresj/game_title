@@ -1,0 +1,51 @@
+$numbers: (1, 4, 5, 8, 10, 15, 20, 25, 45, 50, 75, 100);
+@each $number in $numbers{
+  @each $unit in ("px", "em", "rem") {
+
+    // margin classes
+    %m-#{$number}-#{$unit} {
+      margin: #{$number}#{$unit};
+    }
+    %m-top-bottom-#{$number}-#{$unit} {
+      margin: #{$number}#{$unit} 0;
+    }
+    %m-right-left-#{$number}-#{$unit} {
+      margin: 0 #{$number}#{$unit};
+    }
+    %m-top-#{$number}-#{$unit} {
+      margin-top: #{$number}#{$unit};
+    }
+    %m-left-#{$number}-#{$unit} {
+      margin-left: #{$number}#{$unit};
+    }
+    %m-bottom-#{$number}-#{$unit} {
+      margin-bottom: #{$number}#{$unit};
+    }
+    %m-right-#{$number}-#{$unit} {
+      margin-right: #{$number}#{$unit};
+    }
+
+    // padding classes
+    %p-#{$number}-#{$unit} {
+      padding: #{$number}#{$unit};
+    }
+    %p-top-bottom-#{$number}-#{$unit} {
+      padding: #{$number}#{$unit} 0;
+    }
+    %p-right-left-#{$number}-#{$unit} {
+      padding: 0 #{$number}#{$unit};
+    }
+    %p-top-#{$number}-#{$unit} {
+      padding-top: #{$number}#{$unit};
+    }
+    %p-left-#{$number}-#{$unit} {
+      padding-left: #{$number}#{$unit};
+    }
+    %p-bottom-#{$number}-#{$unit} {
+      padding-bottom: #{$number}#{$unit};
+    }
+    %p-right-#{$number}-#{$unit} {
+      padding-right: #{$number}#{$unit};
+    }
+  }
+}
