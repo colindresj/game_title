@@ -31,8 +31,9 @@ App.Views.Story = Backbone.View.extend({
         newGame: false,
         hintsLeft: this.collection.getHints() === "0" ? false : true
       }));
+      debugger
       this.modelCounter = parseInt(currentChapter, 10);
-      this.addAllCompleted();
+      this.renderFinished();
       return false;
     }
 
@@ -88,11 +89,14 @@ App.Views.Story = Backbone.View.extend({
       this.$el.append(completedChapterHTML);
       i++;
     }
-    if (this.modelCounter !== this.collection.models.length) {
-      this.addOne();
-    } else {
+    this.addOne();
+  },
+  renderFinished: function(){
+    i = 1;
+    while (i <= this.modelCounter) {
       var completedChapterHTML = localStorage.getItem('chapter' + i);
       this.$el.append(completedChapterHTML);
+      i++;
     }
   },
   pointsBump: function(){
