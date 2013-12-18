@@ -8,10 +8,23 @@ App.Views.Story = Backbone.View.extend({
   template: JST['story'],
   initialize: function(){
 
+    // ready for done event to render the full view
+    this.listenTo(this.collection, 'done', this.render);
+
+    // add a new chapter whenever one is completed
+    this.listenTo(this.collection, 'change:completed', this.addOne);
+
+    // add points to score when an answer is solved
+    this.listenTo(this.collection, 'riddleSolved', this.pointsBump);
+  },
+  render: function(){
+
     // checking local storage for a current chapter and if so setting the counter to it
     var currentChapter = this.collection.getProgress();
     if (currentChapter) {
       this.$el.append(this.template({
+        title: this.collection.title,
+        author: this.collection.author,
         points: this.collection.points,
         newGame: false,
         hintsLeft: this.collection.getHints() === "0" ? false : true
@@ -26,12 +39,6 @@ App.Views.Story = Backbone.View.extend({
       }));
       this.modelCounter = 1;
     }
-
-    // add a new chapter whenever one is completed
-    this.listenTo(this.collection, 'change:completed', this.addOne);
-
-    // add points to score when an answer is solved
-    this.listenTo(this.collection, 'riddleSolved', this.pointsBump);
   },
   startGame: function(){
     this.addOne();

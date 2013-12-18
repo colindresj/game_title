@@ -6,7 +6,27 @@ App.Collections.Chapters = Backbone.Collection.extend({
     // grab the current user points and hints left or set to 0 and 3 if not saved
     this.points = parseInt(this.getPoints(), 10) || 0;
     this.hints = parseInt(this.getHints(), 10) || 4;
-    this.fetch();
+
+    // manually fetch the collection of chapters because our json response contains
+    // more than just models. It has title and author as well, so we have to manually
+    // add models and assign collection attributes
+    $.ajax({
+      url: this.url,
+      context: this,
+      type: 'GET'
+    })
+    .done(function(response) {
+      this.title = response.title;
+      this.author = response.author;
+      _.each(response.chapters, function(chapter){
+        this.add(new this.model(chapter));
+      }, this);
+      this.trigger('done');
+      this.trigger('sync');
+    })
+    .fail(function() {
+      console.log("Couldn't load story.");
+    });
   },
   saveProgress: function(currentChapter){
     localStorage.setItem('currentChapter', currentChapter);
