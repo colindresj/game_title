@@ -2,9 +2,9 @@ App.Models.Chapter = Backbone.Model.extend({
   defaults: {
     completed: false,
     riddles: [],
+    solved: [],
     hintCounter: 0
   },
-  // add in sovled array based off of index with t/f then be able to loop through that to check for answers
   riddleParse: function(){
     var content = this.get('text');
 
@@ -19,6 +19,13 @@ App.Models.Chapter = Backbone.Model.extend({
         content = content.replace(/{(.*?)}/, '<input type="text" class="riddle" size="' + (currentRiddle.length - 2) + '">');
         return regEx.exec(currentRiddle)[1];
       }, this)
+    });
+
+    // pre-populate the riddles array with all solved booleans to false
+    this.set({
+      solved: _.map(riddles, function(currentRiddle){
+        return false;
+      })
     });
 
     // set the text for the chapter equal to the string with inputs in place of
