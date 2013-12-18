@@ -57,7 +57,7 @@ App.Views.Story = Backbone.View.extend({
     }
   },
   startGame: function(){
-    $('#intro').remove();
+    $('#intro').hide();
     this.addOne();
     $('#start').replaceWith('<button id="hint">Hint</button><button id="answer">Answer</button>');
   },
@@ -83,7 +83,6 @@ App.Views.Story = Backbone.View.extend({
     }
   },
   addAllCompleted: function(){
-    $('#intro').remove();
     i = 1;
     while (i < this.modelCounter) {
       var completedChapterHTML = localStorage.getItem('chapter' + i);
@@ -137,7 +136,8 @@ App.Views.Story = Backbone.View.extend({
     }
   },
   finishGame: function(){
-    alert('That\'s all for now, folks.');
+    this.$el.hide();
+    $('#complete').show();
     this.collection.finishGame();
   }
 });
