@@ -1,4 +1,5 @@
 App.Views.Chapter = Backbone.View.extend({
+  tagName: 'article',
   events: {
     'keyup .riddle': 'validateGuess'
   },

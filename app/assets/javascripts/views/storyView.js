@@ -31,7 +31,6 @@ App.Views.Story = Backbone.View.extend({
         newGame: false,
         hintsLeft: this.collection.getHints() === "0" ? false : true
       }));
-      debugger
       this.modelCounter = parseInt(currentChapter, 10);
       this.renderFinished();
       return false;
@@ -58,6 +57,7 @@ App.Views.Story = Backbone.View.extend({
     }
   },
   startGame: function(){
+    $('#intro').remove();
     this.addOne();
     $('#start').replaceWith('<button id="hint">Hint</button><button id="answer">Answer</button>');
   },
@@ -83,6 +83,7 @@ App.Views.Story = Backbone.View.extend({
     }
   },
   addAllCompleted: function(){
+    $('#intro').remove();
     i = 1;
     while (i < this.modelCounter) {
       var completedChapterHTML = localStorage.getItem('chapter' + i);

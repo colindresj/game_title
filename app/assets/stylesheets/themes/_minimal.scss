@@ -38,3 +38,10 @@
   }
 
 }
+#intro.minimal {
+  @extend %p-top-50-px;
+  p {
+    line-height: 2em;
+    @extend %m-bottom-15-px;
+  }
+}
