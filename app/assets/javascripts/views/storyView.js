@@ -19,8 +19,24 @@ App.Views.Story = Backbone.View.extend({
   },
   render: function(){
 
-    // checking local storage for a current chapter and if so setting the counter to it
+    // checking local storage for a game progress
     var currentChapter = this.collection.getProgress();
+
+    // if game is over render completed story and break out
+    if (localStorage.getItem('gameComplete')) {
+      this.$el.append(this.template({
+        title: this.collection.title,
+        author: this.collection.author,
+        points: this.collection.points,
+        newGame: false,
+        hintsLeft: this.collection.getHints() === "0" ? false : true
+      }));
+      this.modelCounter = parseInt(currentChapter, 10);
+      this.addAllCompleted();
+      return false;
+    }
+
+    // if there is current chapter and if so setting the counter to it
     if (currentChapter) {
       this.$el.append(this.template({
         title: this.collection.title,
@@ -68,15 +84,16 @@ App.Views.Story = Backbone.View.extend({
   addAllCompleted: function(){
     i = 1;
     while (i < this.modelCounter) {
-
       var completedChapterHTML = localStorage.getItem('chapter' + i);
-      // var currentChapter = this.collection.get(i);
-      // var chapterView = new App.Views.Chapter({ model: currentChapter });
-      // chapterView.solveAll();
       this.$el.append(completedChapterHTML);
       i++;
     }
-    this.addOne();
+    if (this.modelCounter !== this.collection.models.length) {
+      this.addOne();
+    } else {
+      var completedChapterHTML = localStorage.getItem('chapter' + i);
+      this.$el.append(completedChapterHTML);
+    }
   },
   pointsBump: function(){
     $('#points span').html(this.collection.pointsBump());
@@ -116,5 +133,6 @@ App.Views.Story = Backbone.View.extend({
   },
   finishGame: function(){
     alert('That\'s all for now, folks.');
+    this.collection.finishGame();
   }
 });

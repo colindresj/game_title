@@ -21,28 +21,30 @@ App.Views.Chapter = Backbone.View.extend({
     this.listenTo(this.model, 'giveAnswer', this.giveAnswer);
     this.listenTo(this.model, 'giveHint', this.giveHint);
   },
-  fillAnswer: function($input, answers, answer, givePoints){
+  fillAnswer: function($input, answers, answer, givePoints, correctGuess){
 
     var riddlesClone = this.model.get('riddlesClone');
-    var solvedOnModel = this.model.get('solved');
     var solvedRiddles = JSON.parse(this.model.getProgress()) || {};
     var answerIndex = _.indexOf(riddlesClone, answer);
 
     // update the solved hash in storage
-    solvedRiddles[answerIndex] = answer;
+    solvedRiddles[answerIndex] = answer + ', ' + correctGuess;
     this.model.saveProgress(JSON.stringify(solvedRiddles));
 
+    // remove the solved word from the answers bank
+    // but leave it in the initial clone, which needs to always maintain the words from the start
     answers.remove(answer);
 
     // trigger a custom event to increase the points if needed
-    // and paint the span green for correct, pink for with hint
-    if (givePoints) {
+    if (givePoints) this.model.trigger('riddleSolved');
+
+    // Paint the span green for correct, pink for with hint
+    if (correctGuess) {
       $input.fadeOut('fast', function(){
         var $answerSpan = $('<span class="solved green-raw-highlight">' + answer + '</span>');
         $(this).replaceWith($answerSpan);
         $answerSpan.fadeIn('fast');
       });
-      this.model.trigger('riddleSolved');
     } else {
       $input.fadeOut('fast', function(){
         var $answerSpan = $('<span class="solved pink-raw-highlight">' + answer + '</span>');
@@ -76,7 +78,7 @@ App.Views.Chapter = Backbone.View.extend({
     // then focus on the next question
     var answers = this.model.get('riddles');
     _.each(answers, function(answer){
-      if ($input.val() === answer)this.fillAnswer($input, answers, answer, true);
+      if ($input.val() === answer)this.fillAnswer($input, answers, answer, true, true);
     }, this);
     this.completeChapter();
   },
@@ -93,10 +95,15 @@ App.Views.Chapter = Backbone.View.extend({
       var solvedPairs = _.pairs(solved);
       _.each(solvedPairs, function(solvedPair){
         var i = parseInt(solvedPair[0], 10) + 1;
-        var answer = solvedPair[1];
+        var answer = solvedPair[1].split(', ')[0];
         var $input = $('.riddle:nth-of-type(' + i + ')');
         var answers = this.model.get('riddles');
-        this.fillAnswer($input, answers, answer, false);
+        if (solvedPair[1].split(', ')[1] === "true") {
+          var correctGuess = true;
+        } else {
+          var correctGuess = false;
+        }
+        this.fillAnswer($input, answers, answer, false, correctGuess);
       }, this);
     }
   },
@@ -105,7 +112,7 @@ App.Views.Chapter = Backbone.View.extend({
     var answers = this.model.get('riddles');
     var givenAnswer = answers[0];
 
-    this.fillAnswer($input, answers, givenAnswer, false);
+    this.fillAnswer($input, answers, givenAnswer, false, false);
     this.completeChapter();
   },
   giveHint: function(){
@@ -143,7 +150,10 @@ App.Views.Chapter = Backbone.View.extend({
       // save the raw html of the completed chapter for later appending
       var _this = this;
       setTimeout(function() {
-        var chapterFinishedHTML = $('#chapter-' + _this.model.id).html();
+
+        // grabbing a clone and wrapping it in a div so we can grab the whole container,
+        // not just its inner HTML
+        var chapterFinishedHTML = $('#chapter-' + _this.model.id).clone().wrapAll('<div/>').parent().html();
         localStorage.setItem('chapter' + _this.model.id, chapterFinishedHTML);
       }, 400);
 

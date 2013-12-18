@@ -34,6 +34,9 @@ App.Collections.Chapters = Backbone.Collection.extend({
   getProgress: function(){
     return localStorage.getItem('currentChapter');
   },
+  finishGame: function(){
+    localStorage.setItem('gameComplete', true);
+  },
   pointsBump: function(){
     this.points += 50;
     this.savePoints();
