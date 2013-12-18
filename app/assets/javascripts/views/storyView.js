@@ -68,9 +68,12 @@ App.Views.Story = Backbone.View.extend({
   addAllCompleted: function(){
     i = 1;
     while (i < this.modelCounter) {
-      var currentChapter = this.collection.get(i);
-      var chapterView = new App.Views.Chapter({ model: currentChapter });
-      chapterView.solveAll();
+
+      var completedChapterHTML = localStorage.getItem('chapter' + i);
+      // var currentChapter = this.collection.get(i);
+      // var chapterView = new App.Views.Chapter({ model: currentChapter });
+      // chapterView.solveAll();
+      this.$el.append(completedChapterHTML);
       i++;
     }
     this.addOne();

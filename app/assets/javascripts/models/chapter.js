@@ -2,6 +2,7 @@ App.Models.Chapter = Backbone.Model.extend({
   defaults: {
     completed: false,
     riddles: [],
+    riddlesClone: [],
     hintCounter: 0
   },
   riddleParse: function(){
@@ -20,12 +21,8 @@ App.Models.Chapter = Backbone.Model.extend({
       }, this)
     });
 
-    // pre-populate the riddles array with all solved booleans to false
-    this.set({
-      solved: _.map(riddles, function(currentRiddle){
-        return false;
-      })
-    });
+    // make a clone of the riddles and save it on the collection for future comparison
+    this.set('riddlesClone', this.get('riddles').slice(0));
 
     // set the text for the chapter equal to the string with inputs in place of
     // answers (words originally wraped in {})

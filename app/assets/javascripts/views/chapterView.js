@@ -23,14 +23,16 @@ App.Views.Chapter = Backbone.View.extend({
   },
   fillAnswer: function($input, answers, answer, givePoints){
 
+    var riddlesClone = this.model.get('riddlesClone');
+    var solvedOnModel = this.model.get('solved');
     var solvedRiddles = JSON.parse(this.model.getProgress()) || {};
-    var answerIndex = _.indexOf(answers, answer);
+    var answerIndex = _.indexOf(riddlesClone, answer);
 
+    // update the solved hash in storage
     solvedRiddles[answerIndex] = answer;
-
     this.model.saveProgress(JSON.stringify(solvedRiddles));
 
-    // answers.remove(answer);
+    answers.remove(answer);
 
     // trigger a custom event to increase the points if needed
     // and paint the span green for correct, pink for with hint
@@ -101,7 +103,8 @@ App.Views.Chapter = Backbone.View.extend({
   giveAnswer: function(){
     var $input = $('.riddle:first');
     var answers = this.model.get('riddles');
-    var givenAnswer = this.model.get('riddles')[0];
+    var givenAnswer = answers[0];
+
     this.fillAnswer($input, answers, givenAnswer, false);
     this.completeChapter();
   },
@@ -125,7 +128,7 @@ App.Views.Chapter = Backbone.View.extend({
     $input.focus();
   },
   completeChapter: function(){
-    var answers = this.model.get('riddles');
+    var answers = this.model.get('riddlesClone');
 
     // grab the current answers from local storage or set it to an empty object
     // so we can call _.values on it below
@@ -136,6 +139,14 @@ App.Views.Chapter = Backbone.View.extend({
 
       // start off the next chapter with no progress
       this.model.resetProgress();
+
+      // save the raw html of the completed chapter for later appending
+      var _this = this;
+      setTimeout(function() {
+        var chapterFinishedHTML = $('#chapter-' + _this.model.id).html();
+        localStorage.setItem('chapter' + _this.model.id, chapterFinishedHTML);
+      }, 400);
+
       this.model.set({completed: true});
     } else {
       return false;
