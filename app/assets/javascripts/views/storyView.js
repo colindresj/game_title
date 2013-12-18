@@ -56,6 +56,9 @@ App.Views.Story = Backbone.View.extend({
     if (currentChapter){
       var chapterView = new App.Views.Chapter({ model: currentChapter });
 
+      // solve any that need to be solved
+      chapterView.solveSome();
+
       // save story progress to local storage for later continuation
       this.collection.saveProgress(currentChapter.id);
     } else {

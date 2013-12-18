@@ -22,7 +22,15 @@ App.Views.Chapter = Backbone.View.extend({
     this.listenTo(this.model, 'giveHint', this.giveHint);
   },
   fillAnswer: function($input, answers, answer, givePoints){
-    answers.remove(answer);
+
+    var solvedRiddles = JSON.parse(this.model.getProgress()) || {};
+    var answerIndex = _.indexOf(answers, answer);
+
+    solvedRiddles[answerIndex] = answer;
+
+    this.model.saveProgress(JSON.stringify(solvedRiddles));
+
+    // answers.remove(answer);
 
     // trigger a custom event to increase the points if needed
     // and paint the span green for correct, pink for with hint
@@ -74,8 +82,21 @@ App.Views.Chapter = Backbone.View.extend({
     var answers =  this.model.get('riddles');
     _.each(answers, function(answer){
       var $input = this.$el.find('.riddle:first');
-      $input.replaceWith('<span class="solved pink-raw-highlight">' + answer + '</span>');
+      $input.replaceWith('<span class="solved green-raw-highlight">' + answer + '</span>');
     }, this);
+  },
+  solveSome: function(){
+    var solved = JSON.parse(this.model.getProgress());
+    if (solved) {
+      var solvedPairs = _.pairs(solved);
+      _.each(solvedPairs, function(solvedPair){
+        var i = parseInt(solvedPair[0], 10) + 1;
+        var answer = solvedPair[1];
+        var $input = $('.riddle:nth-of-type(' + i + ')');
+        var answers = this.model.get('riddles');
+        this.fillAnswer($input, answers, answer, false);
+      }, this);
+    }
   },
   giveAnswer: function(){
     var $input = $('.riddle:first');
@@ -106,8 +127,15 @@ App.Views.Chapter = Backbone.View.extend({
   completeChapter: function(){
     var answers = this.model.get('riddles');
 
-    // set the chapter to completed if no more answers
-    if (answers.length === 0) {
+    // grab the current answers from local storage or set it to an empty object
+    // so we can call _.values on it below
+    var savedAnswers = JSON.parse(this.model.getProgress()) || {};
+
+    // set the chapter to completed if all solved
+    if (answers.length === _.values(savedAnswers).length) {
+
+      // start off the next chapter with no progress
+      this.model.resetProgress();
       this.model.set({completed: true});
     } else {
       return false;

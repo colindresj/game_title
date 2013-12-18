@@ -2,7 +2,6 @@ App.Models.Chapter = Backbone.Model.extend({
   defaults: {
     completed: false,
     riddles: [],
-    solved: [],
     hintCounter: 0
   },
   riddleParse: function(){
@@ -31,6 +30,15 @@ App.Models.Chapter = Backbone.Model.extend({
     // set the text for the chapter equal to the string with inputs in place of
     // answers (words originally wraped in {})
     this.set({text: content});
+  },
+  saveProgress: function(solved){
+    localStorage.setItem('solvedRiddles', solved);
+  },
+  getProgress: function(){
+    return localStorage.getItem('solvedRiddles');
+  },
+  resetProgress: function(){
+    localStorage.removeItem('solvedRiddles');
   }
 });
 
