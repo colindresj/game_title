@@ -4,6 +4,7 @@ App.Models.Chapter = Backbone.Model.extend({
     riddles: [],
     hintCounter: 0
   },
+  // add in sovled array based off of index with t/f then be able to loop through that to check for answers
   riddleParse: function(){
     var content = this.get('text');
 
