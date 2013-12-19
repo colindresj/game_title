@@ -38,6 +38,7 @@ App.Views.Story = Backbone.View.extend({
 
     // if there is current chapter and if so setting the counter to it
     if (currentChapter) {
+      $('#intro').remove();
       this.$el.append(this.template({
         title: this.collection.title,
         author: this.collection.author,
@@ -48,6 +49,7 @@ App.Views.Story = Backbone.View.extend({
       this.modelCounter = parseInt(currentChapter, 10);
       this.listenTo(this.collection, 'sync', this.addAllCompleted);
     } else {
+      $('#intro').show();
       this.$el.append(this.template({
         points: this.collection.points,
         newGame: true,
@@ -136,8 +138,14 @@ App.Views.Story = Backbone.View.extend({
     }
   },
   finishGame: function(){
+    var _this = this;
     this.$el.hide();
     $('#complete').show();
     this.collection.finishGame();
+
+    // show the completed story after 5 seconds
+    setTimeout(function() {
+      _this.$el.show();
+    }, 5000);
   }
 });
