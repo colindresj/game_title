@@ -58,11 +58,15 @@ group :development, :test do
   gem 'awesome_print'
 end
 
+group :production do
+  gem 'thin'
+end
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
-# Use thin as the app server
-gem 'thin'
+# Use unicorn as the app server
+# gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
