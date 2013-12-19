@@ -140,12 +140,13 @@ App.Views.Story = Backbone.View.extend({
   finishGame: function(){
     var _this = this;
     this.$el.hide();
-    $('#complete').show();
+    $('#complete').show().find('.final-points').find('span').html(this.collection.points);
     this.collection.finishGame();
 
     // show the completed story after 5 seconds
     setTimeout(function() {
       _this.$el.show();
+      $('#complete').hide();
     }, 5000);
   }
 });
