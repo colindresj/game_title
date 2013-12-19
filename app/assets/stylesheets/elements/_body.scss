@@ -1,4 +1,5 @@
 body {
   padding-left: $body-padding;
   padding-right: $body-padding;
+  @extend %m-bottom-5-em;
 }
