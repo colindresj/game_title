@@ -2,6 +2,10 @@ title: The Sniper
 author: Liam O'Flaherty
 chapters:
 -
+  id: 0
+  title: Practice
+  text: Type your guess into the input to reveal the hidden {word} and solve the puzzle. Everytime you solve all the puzzles in a chapter, the next one will appear below. Type the word start to begin - {start}
+-
   id: 1
   title: Chapter One
   text: The long June twilight faded into night. Dublin lay enveloped in darkness but for the dim light of the moon that shone through fleecy clouds, casting a {pale} light as of approaching dawn over the streets and the dark waters of the Liffey. Around the beleaguered Four Courts the heavy guns roared. Here and there through the city, machine guns and rifles broke the {silence} of the night, spasmodically, like dogs barking on lone farms. Republicans and Free Staters were waging civil war.

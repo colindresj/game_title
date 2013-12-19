@@ -7,7 +7,7 @@ App.Views.Chapter = Backbone.View.extend({
     $('#story').append(this.$el);
 
     this.$el.attr('id', 'chapter-' + this.model.id);
-    this.template = JST['chapter' + this.model.id];
+    this.template = JST['chapter'];
 
     // parse the chapter in order to properly remove the answers and replace
     // them with blank inputs, as well as set the models answers in a riddles array

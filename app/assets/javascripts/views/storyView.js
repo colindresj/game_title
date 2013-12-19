@@ -55,7 +55,7 @@ App.Views.Story = Backbone.View.extend({
         newGame: true,
         hintsLeft: false
       }));
-      this.modelCounter = 1;
+      this.modelCounter = 0;
     }
   },
   startGame: function(){
@@ -85,7 +85,7 @@ App.Views.Story = Backbone.View.extend({
     }
   },
   addAllCompleted: function(){
-    i = 1;
+    i = 0;
     while (i < this.modelCounter) {
       var completedChapterHTML = localStorage.getItem('chapter' + i);
       this.$el.append(completedChapterHTML);
@@ -94,7 +94,7 @@ App.Views.Story = Backbone.View.extend({
     this.addOne();
   },
   renderFinished: function(){
-    i = 1;
+    i = 0;
     while (i <= this.modelCounter) {
       var completedChapterHTML = localStorage.getItem('chapter' + i);
       this.$el.append(completedChapterHTML);
