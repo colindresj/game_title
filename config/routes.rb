@@ -1,4 +1,4 @@
 StoryApp::Application.routes.draw do
   root to: "welcome#index"
-  match "story", to: "welcome#show", via: [:get]
+  get "/story", to: "welcome#show"
 end
