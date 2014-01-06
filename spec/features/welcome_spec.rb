@@ -8,11 +8,6 @@ describe "The Game"do
     expect(page).to have_button("Start the Game")
   end
 
-  xit "says the name of the app" do
-    expect(page).to have_css("h1")
-    expect(page).to have_content("Story App")
-  end
-
   context "when clicking on the start game button", :js => true do
 
     before(:each) do
@@ -20,9 +15,9 @@ describe "The Game"do
       click_button("Start the Game")
     end
 
-    it "shows the first chapter" do
-      expect(page).to have_content("chapter 1")
-      expect(page).to have_css("#chapter-1")
+    it "shows the practice round" do
+      expect(page).to have_content("Practice")
+      expect(page).to have_css("#chapter-0")
     end
 
     it "has a bunch of inputs(riddles) and no .solved" do
@@ -40,7 +35,7 @@ describe "The Game"do
 
     before(:each) do
       click_button("Start the Game")
-      @answer = "nervous"
+      @answer = "word"
       page.first(".riddle").set(@answer)
     end
 
@@ -60,15 +55,13 @@ describe "The Game"do
     before(:each) do
       visit "/"
       click_button("Start the Game")
-      page.first(".riddle").set("nervous")
-      page.first(".riddle").set("senses")
-      page.first(".riddle").set("earth")
-      page.first(".riddle").set("story")
+      page.first(".riddle").set("word")
+      page.first(".riddle").set("start")
     end
 
     it "shows the next chapter" do
-      expect(page).to have_content("chapter 2")
-      expect(page).to have_css("#chapter-2")
+      expect(page).to have_content("Chapter One")
+      expect(page).to have_css("#chapter-1")
     end
 
   end
