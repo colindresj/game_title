@@ -57,6 +57,7 @@ group :development, :test do
   gem 'quiet_assets' # Turns off the Rails asset pipeline log
   gem 'meta_request' # Supporting gem for Rails Panel
   gem 'awesome_print'
+  gem 'rake'
 end
 
 # Use ActiveModel has_secure_password

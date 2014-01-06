@@ -16,4 +16,4 @@ This is a Backbone Application being served up by Ruby on Rails running a Thin S
 
 Data is plugged into the DOM from Backbone using a combination of my own regular expressions and Handlebars.
 
-There are plans to add a MongoDB and Mongo Mapper integration to persists data onto a server as well.
+There are plans to add a MongoDB and Mongo Mapper integration to persist data onto a server as well.
