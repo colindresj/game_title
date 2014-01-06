@@ -242,6 +242,7 @@ DEPENDENCIES
   pry-stack_explorer
   quiet_assets
   rails (= 4.0.2)
+  rake
   rspec-rails
   sass-rails (~> 4.0.0)
   shoulda-matchers
