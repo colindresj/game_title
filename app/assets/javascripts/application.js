@@ -17,8 +17,6 @@
 //= require handlebars.runtime
 //= require underscore
 //= require backbone
-//= require backbone.debug
-//= require backbone.localStorage
 //
 //= require app
 //= require routes
