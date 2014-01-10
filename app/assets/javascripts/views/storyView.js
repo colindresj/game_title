@@ -102,7 +102,15 @@ App.Views.Story = Backbone.View.extend({
     }
   },
   pointsBump: function(){
-    $('#points span').html(this.collection.pointsBump());
+    var $points= $('#points');
+
+    $points.find('span').html(this.collection.pointsBump());
+    $points.addClass('delay-fade');
+
+    // wait until the animation is complete before removing the class
+    setTimeout(function() {
+      $points.removeClass('delay-fade');
+    }, 1000);
   },
   pointsDrop: function(amount){
     $('#points span').html(this.collection.pointsDrop(amount));
