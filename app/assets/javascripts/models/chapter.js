@@ -9,7 +9,7 @@ App.Models.Chapter = Backbone.Model.extend({
     var content = this.get('text');
 
     // create an array of riddles by find words wrapped in curly braces
-    var riddles = content.match(/{(.*?)}/g);
+    var riddles = content.match(/{([^{}]+)}/g);
 
     // loop through the array of riddles, replace the text with inputs
     // and also return an array of clean strings as the riddle answers
