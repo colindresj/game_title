@@ -12,7 +12,4 @@
 .delay-fade {
   @include animation(fadeInUp 1s);
 }
-.flipper {
-  @include animation(flipInX 1s);
-}
 
