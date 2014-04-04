@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/corporadobob/game_title.png?branch=master)](https://travis-ci.org/corporadobob/game_title)
+[![Build Status](https://travis-ci.org/colindresj/game_title.svg?branch=master)](https://travis-ci.org/colindresj/game_title)
 
 ##Game Title
 **Game Title** is a text-based game. It adds complexity to a suspense story by removing some of the words. Your challenge is to work your way through chapters of word puzzles in order to continue reading, and eventually complete, the story. Play the game on [Heroku](http://game-title.herokuapp.com "Game Title").
