@@ -16,6 +16,6 @@
 ###Built With
 This is a Backbone Application being served up by Ruby on Rails running a Thin Server. There is no database, as everything runs off a flat-file design made up of a series of YAML files. Data is persisted to the browser's LocalStorage directly from within Backbone.
 
-Data is plugged into the DOM from Backbone using a combination of my own regular expressions and Handlebars.
+Data is plugged into the DOM using a combination of my own regular expressions and Handlebars.
 
 There are plans to add a MongoDB and Mongo Mapper integration to persist data onto a server as well.
